@@ -1,41 +1,260 @@
-    <!DOCTYPE html>
-    <html lang="ar" dir="rtl">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>إلى أغلى موظفة في قلبي</title>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <!-- خلفية الخدعة البصرية -->
-        <div class="illusion-bg"></div>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>إلى أغلى موظفة في الدنيا ❤️</title>
+    
+    <!-- مكتبة التأثيرات (Confetti) -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
-        <div class="container">
-            <div class="card">
-                <h1 class="glitch" data-text="مقدرش علي زعل الموظفة بتاعتي">مقدرش علي زعل الموظفة بتاعتي</h1>
-                
-                <div class="love-text">
-                    <p class="fade-in">يا ست البنات.. يا اللي ضحكتك بتنور يومي.</p>
-                    <p class="fade-in delay-1">الدنيا كلها تزعل إلا إنتي، لأنك مش مجرد حد في حياتي..</p>
-                    <p class="fade-in delay-2">إنتي "الموطفه" اللي ممشية قلبي على هواها.</p>
-                </div>
+    <style>
+        :root {
+            --primary: #ff2a6d;
+            --secondary: #05d9e8;
+            --dark: #01012b;
+            --glass: rgba(255, 255, 255, 0.1);
+        }
 
-                <!-- مكان الصورة الجديد -->
-                <div class="img-container fade-in">
-                    <div class="image-3d">
-                        <!-- حط رابط صورتك هنا -->
-                        <img src="2a0a654f-a33d-4296-bd8a-9a2360f68a3a.jpg" alt="صورة الموظفة">
-                    </div>
-                </div>
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
-                <div class="heart-container">
-                    <div class="heart"></div>
-                </div>
+        body, html {
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            background-color: var(--dark);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden;
+            display: flex; justify-content: center; align-items: center;
+        }
 
-                <p class="signature">أنا أسف.. صافي يا لبن؟ ❤️</p>
+        /* خلفية سينمائية متحركة */
+        .bg-animate {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, #1a1a4a 0%, #01012b 100%);
+            z-index: -1;
+        }
+
+        .bg-animate::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+            opacity: 0.3;
+        }
+
+        .container {
+            width: 90%; max-width: 380px;
+            perspective: 2000px;
+        }
+
+        /* الكارت الـ 3D */
+        .card {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5), inset 0 0 20px rgba(255,255,255,0.05);
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
+            position: relative;
+        }
+
+        /* برواز الصورة المودرن */
+        .photo-wrap {
+            width: 160px; height: 160px;
+            margin: 0 auto 30px;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .photo-wrap img {
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            box-shadow: 0 0 30px var(--secondary), 0 0 60px var(--primary);
+            transform: translateZ(60px); /* بروز الصورة */
+            animation: floating 4s ease-in-out infinite;
+        }
+
+        .photo-wrap::before {
+            content: ''; position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px;
+            border-radius: 50%; border: 2px dashed var(--secondary);
+            animation: rotate 10s linear infinite;
+            transform: translateZ(30px);
+        }
+
+        /* منطقة الفيديو */
+        #videoArea {
+            display: none;
+            width: 100%;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 2px solid var(--secondary);
+            margin-bottom: 20px;
+            animation: reveal 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes reveal {
+            from { opacity: 0; transform: scale(0.8) translateZ(-100px); }
+            to { opacity: 1; transform: scale(1) translateZ(0); }
+        }
+
+        /* النصوص */
+        .glitch-title {
+            color: white; font-size: 1.5rem; font-weight: 900;
+            margin: 0 0 20px;
+            text-shadow: 2px 2px var(--primary);
+            transform: translateZ(40px);
+        }
+
+        .message {
+            color: #e0e0e0; font-size: 1.1rem; line-height: 1.6;
+            margin-bottom: 30px; transform: translateZ(30px);
+        }
+
+        .typewriter {
+            display: inline-block; overflow: hidden; white-space: nowrap;
+            border-right: 2px solid var(--secondary);
+            animation: typing 3s steps(30) forwards, blink 0.7s infinite;
+        }
+
+        /* الزرار الـ Glow */
+        .btn {
+            background: transparent;
+            border: 2px solid var(--secondary);
+            color: var(--secondary);
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.2rem; font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px var(--secondary);
+            transform: translateZ(50px);
+        }
+
+        .btn:active { transform: scale(0.9) translateZ(50px); }
+
+        .btn.clicked {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+            box-shadow: 0 0 40px var(--primary);
+        }
+
+        /* أنيميشن */
+        @keyframes floating {
+            0%, 100% { transform: translateZ(60px) translateY(0); }
+            50% { transform: translateZ(80px) translateY(-15px); }
+        }
+        @keyframes rotate { from { transform: translateZ(30px) rotate(0); } to { transform: translateZ(30px) rotate(360deg); } }
+        @keyframes typing { from { width: 0; } to { width: 100%; } }
+        @keyframes blink { 50% { border-color: transparent; } }
+
+        .heart-tap {
+            position: absolute; font-size: 30px; pointer-events: none;
+            animation: fly-up 2s ease-out forwards; z-index: 1000;
+        }
+        @keyframes fly-up {
+            to { transform: translateY(-150px) scale(1.5); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-animate"></div>
+
+    <div class="container">
+        <div class="card" id="tiltCard">
+            <!-- الصورة -->
+            <div id="photoContainer" class="photo-wrap">
+                <img src="photo.jpg" alt="أحلى موظفة">
             </div>
-        </div>
 
-        <script src="script.js"></script>
-    </body>
-    </html>
+            <!-- الفيديو -->
+            <div id="videoArea">
+                <blockquote class="tiktok-embed" data-video-id="7554455761619930375" style="max-width: 100%;">
+                    <section></section>
+                </blockquote>
+                <script async src="https://www.tiktok.com/embed.js"></script>
+            </div>
+
+            <h1 class="glitch-title">مقدرش علي زعل الموطفه بتاعتي</h1>
+            
+            <div class="message">
+                <span class="typewriter">يا ست البنات.. ضحكتك بتنور يومي.</span>
+                <p id="subText" style="opacity:0; transition: 1s;">الدنيا تزعل وإنتي لا.. صافي يا لبن؟ ❤️</p>
+            </div>
+
+            <button id="reconcileBtn" class="btn">صافي يا لبن؟ ❤️</button>
+        </div>
+    </div>
+
+    <script>
+        const card = document.getElementById('tiltCard');
+        const btn = document.getElementById('reconcileBtn');
+        const photo = document.getElementById('photoContainer');
+        const video = document.getElementById('videoArea');
+        const subText = document.getElementById('subText');
+
+        // 1. حركة الـ 3D مع اللمس (للجوال)
+        document.addEventListener('touchmove', (e) => {
+            const touch = e.touches[0];
+            const x = (window.innerWidth / 2 - touch.pageX) / 10;
+            const y = (window.innerHeight / 2 - touch.pageY) / 10;
+            card.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
+        }, { passive: true });
+
+        // 2. ظهور النص الثاني بعد الكتابة
+        setTimeout(() => { subText.style.opacity = "1"; }, 3500);
+
+        // 3. الضغط على الزرار (المفاجأة)
+        btn.addEventListener('click', () => {
+            // تحويل شكل الزرار
+            btn.classList.add('clicked');
+            btn.innerText = "أحلى موظفة في الكون! 😍";
+
+            // تبديل الصورة بالفيديو
+            photo.style.display = 'none';
+            video.style.display = 'block';
+
+            // انفجار قلوب نيون
+            const duration = 5 * 1000;
+            const end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 5,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0, y: 0.8 },
+                    colors: ['#ff2a6d', '#05d9e8', '#ffffff']
+                });
+                confetti({
+                    particleCount: 5,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1, y: 0.8 },
+                    colors: ['#ff2a6d', '#05d9e8', '#ffffff']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        });
+
+        // 4. تأثير قلوب عند لمس أي مكان في الشاشة
+        document.addEventListener('touchstart', (e) => {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.className = 'heart-tap';
+            heart.style.left = e.touches[0].clientX + 'px';
+            heart.style.top = e.touches[0].clientY + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 2000);
+        });
+    </script>
+</body>
+</html>
