@@ -50,6 +50,7 @@ body, html {
     box-shadow: 0 25px 50px rgba(0,0,0,0.5);
     max-width: 600px;
     transition: transform 0.5s;
+    transform-style: preserve-3d; /* مهم جداً عشان العناصر اللي جواها تبان 3D */
 }
 
 .card:hover {
@@ -113,6 +114,56 @@ body, html {
 
 @keyframes fadeIn {
     to { opacity: 1; transform: translateY(-10px); }
+}
+
+/* حاوية الصورة */
+.img-container {
+    perspective: 1000px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: center;
+}
+
+.image-3d {
+    width: 150px;
+    height: 150px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.6s;
+    animation: floating 3s ease-in-out infinite; /* حركة عايمة */
+}
+
+.image-3d img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%; /* دائرية أو شيل السطر ده لو عايزها مربعة */
+    object-fit: cover;
+    border: 4px solid var(--secondary-color);
+    box-shadow:
+        0 0 15px var(--secondary-color),
+        0 0 30px var(--primary-color),
+        inset 0 0 15px rgba(255,255,255,0.5);
+    transform: translateZ(50px); /* بيخلي الصورة تطلع لقدام عن الكارت */
+}
+
+/* إضافة تأثير ظل تحت الصورة عشان تبان طايرة */
+.image-3d::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 10%;
+    width: 80%;
+    height: 10px;
+    background: rgba(0,0,0,0.3);
+    filter: blur(5px);
+    border-radius: 50%;
+    transform: translateZ(20px);
+}
+
+/* أنيميشن الطوفان (Floating) */
+@keyframes floating {
+    0%, 100% { transform: translateY(0) rotateY(0); }
+    50% { transform: translateY(-15px) rotateY(10deg); }
 }
 
 .signature {
