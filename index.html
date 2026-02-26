@@ -1,260 +1,165 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>إلى أغلى موظفة في الدنيا ❤️</title>
-    
-    <!-- مكتبة التأثيرات (Confetti) -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <!DOCTYPE html>
+    <html lang="ar" dir="rtl">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <title>أنا أسف ❤️</title>
+        <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+        <style>
+            :root {
+                --primary: #ff2a6d;
+                --secondary: #05d9e8;
+                --dark: #01012b;
+            }
 
-    <style>
-        :root {
-            --primary: #ff2a6d;
-            --secondary: #05d9e8;
-            --dark: #01012b;
-            --glass: rgba(255, 255, 255, 0.1);
-        }
+            * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+            body {
+                width: 100%; height: 100vh;
+                background: var(--dark);
+                font-family: 'Segoe UI', sans-serif;
+                overflow: hidden;
+                display: flex; justify-content: center; align-items: center;
+            }
 
-        body, html {
-            margin: 0; padding: 0;
-            width: 100%; height: 100%;
-            background-color: var(--dark);
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            overflow: hidden;
-            display: flex; justify-content: center; align-items: center;
-        }
+            /* خلفية خفيفة عشان متحملش عالموبايل */
+            .bg {
+                position: fixed; width: 100%; height: 100%;
+                background: radial-gradient(circle at center, #1a1a4a 0%, #01012b 100%);
+                z-index: -1;
+            }
 
-        /* خلفية سينمائية متحركة */
-        .bg-animate {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at center, #1a1a4a 0%, #01012b 100%);
-            z-index: -1;
-        }
+            .container { width: 92%; max-width: 360px; perspective: 1500px; }
 
-        .bg-animate::after {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
-            opacity: 0.3;
-        }
+            .card {
+                background: rgba(255, 255, 255, 0.08);
+                backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+                border-radius: 25px; border: 1px solid rgba(255, 255, 255, 0.1);
+                padding: 20px 15px; text-align: center;
+                box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+                transform-style: preserve-3d; transition: transform 0.1s;
+            }
 
-        .container {
-            width: 90%; max-width: 380px;
-            perspective: 2000px;
-        }
+            /* الصورة: صغرنا الحجم عشان يناسب الموبايل */
+            .photo-area {
+                width: 110px; height: 110px; margin: 0 auto 15px;
+                position: relative; transform-style: preserve-3d;
+            }
 
-        /* الكارت الـ 3D */
-        .card {
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            padding: 40px 20px;
-            text-align: center;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5), inset 0 0 20px rgba(255,255,255,0.05);
-            transform-style: preserve-3d;
-            transition: transform 0.1s ease-out;
-            position: relative;
-        }
+            .photo-area img {
+                width: 100%; height: 100%; border-radius: 50%;
+                object-fit: cover; border: 3px solid white;
+                box-shadow: 0 0 20px var(--secondary);
+                transform: translateZ(40px);
+                animation: float 3s ease-in-out infinite;
+            }
 
-        /* برواز الصورة المودرن */
-        .photo-wrap {
-            width: 160px; height: 160px;
-            margin: 0 auto 30px;
-            position: relative;
-            transform-style: preserve-3d;
-        }
+            /* منطقة الفيديو: هتفتح بمقاس الموبايل */
+            #videoArea {
+                display: none; width: 100%; border-radius: 15px;
+                overflow: hidden; border: 2px solid var(--secondary);
+                margin-bottom: 15px; animation: slideIn 0.5s ease-out;
+            }
 
-        .photo-wrap img {
-            width: 100%; height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid white;
-            box-shadow: 0 0 30px var(--secondary), 0 0 60px var(--primary);
-            transform: translateZ(60px); /* بروز الصورة */
-            animation: floating 4s ease-in-out infinite;
-        }
+            .glitch-text {
+                color: white; font-size: 1.3rem; font-weight: bold;
+                text-shadow: 2px 2px var(--primary); margin-bottom: 10px;
+            }
 
-        .photo-wrap::before {
-            content: ''; position: absolute; top: 10px; left: 10px; right: 10px; bottom: 10px;
-            border-radius: 50%; border: 2px dashed var(--secondary);
-            animation: rotate 10s linear infinite;
-            transform: translateZ(30px);
-        }
+            .msg { color: #ccc; font-size: 0.95rem; line-height: 1.4; margin-bottom: 20px; }
 
-        /* منطقة الفيديو */
-        #videoArea {
-            display: none;
-            width: 100%;
-            border-radius: 20px;
-            overflow: hidden;
-            border: 2px solid var(--secondary);
-            margin-bottom: 20px;
-            animation: reveal 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
+            .typewriter {
+                display: inline-block; overflow: hidden; white-space: nowrap;
+                border-right: 2px solid var(--secondary);
+                animation: typing 2.5s steps(25) forwards;
+            }
 
-        @keyframes reveal {
-            from { opacity: 0; transform: scale(0.8) translateZ(-100px); }
-            to { opacity: 1; transform: scale(1) translateZ(0); }
-        }
+            .btn {
+                background: transparent; border: 2px solid var(--secondary);
+                color: var(--secondary); padding: 12px 30px; border-radius: 50px;
+                font-size: 1rem; font-weight: bold; transition: 0.3s;
+                box-shadow: 0 0 10px var(--secondary);
+            }
 
-        /* النصوص */
-        .glitch-title {
-            color: white; font-size: 1.5rem; font-weight: 900;
-            margin: 0 0 20px;
-            text-shadow: 2px 2px var(--primary);
-            transform: translateZ(40px);
-        }
+            .btn:active { background: var(--secondary); color: black; transform: scale(0.9); }
 
-        .message {
-            color: #e0e0e0; font-size: 1.1rem; line-height: 1.6;
-            margin-bottom: 30px; transform: translateZ(30px);
-        }
+            @keyframes float { 0%, 100% { transform: translateZ(40px) translateY(0); } 50% { transform: translateZ(50px) translateY(-10px); } }
+            @keyframes typing { from { width: 0; } to { width: 100%; } }
+            @keyframes slideIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
 
-        .typewriter {
-            display: inline-block; overflow: hidden; white-space: nowrap;
-            border-right: 2px solid var(--secondary);
-            animation: typing 3s steps(30) forwards, blink 0.7s infinite;
-        }
+            .heart { position: absolute; font-size: 20px; pointer-events: none; animation: fly 1.5s ease-out forwards; }
+            @keyframes fly { to { transform: translateY(-100px); opacity: 0; } }
+        </style>
+    </head>
+    <body>
 
-        /* الزرار الـ Glow */
-        .btn {
-            background: transparent;
-            border: 2px solid var(--secondary);
-            color: var(--secondary);
-            padding: 15px 40px;
-            border-radius: 50px;
-            font-size: 1.2rem; font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 0 15px var(--secondary);
-            transform: translateZ(50px);
-        }
-
-        .btn:active { transform: scale(0.9) translateZ(50px); }
-
-        .btn.clicked {
-            background: var(--primary);
-            border-color: var(--primary);
-            color: white;
-            box-shadow: 0 0 40px var(--primary);
-        }
-
-        /* أنيميشن */
-        @keyframes floating {
-            0%, 100% { transform: translateZ(60px) translateY(0); }
-            50% { transform: translateZ(80px) translateY(-15px); }
-        }
-        @keyframes rotate { from { transform: translateZ(30px) rotate(0); } to { transform: translateZ(30px) rotate(360deg); } }
-        @keyframes typing { from { width: 0; } to { width: 100%; } }
-        @keyframes blink { 50% { border-color: transparent; } }
-
-        .heart-tap {
-            position: absolute; font-size: 30px; pointer-events: none;
-            animation: fly-up 2s ease-out forwards; z-index: 1000;
-        }
-        @keyframes fly-up {
-            to { transform: translateY(-150px) scale(1.5); opacity: 0; }
-        }
-    </style>
-</head>
-<body>
-
-    <div class="bg-animate"></div>
+    <div class="bg"></div>
 
     <div class="container">
-        <div class="card" id="tiltCard">
+        <div class="card" id="card">
             <!-- الصورة -->
-            <div id="photoContainer" class="photo-wrap">
-                <img src="2a0a654f-a33d-4296-bd8a-9a2360f68a3a.jpg" alt="أحلى موظفة">
+            <div id="photoContainer" class="photo-area">
+                <img src="2a0a654f-a33d-4296-bd8a-9a2360f68a3a.jpg" alt="الموظفة">
             </div>
 
-            <!-- الفيديو -->
+            <!-- الفيديو (بيظهر مكان الصورة) -->
             <div id="videoArea">
-                <blockquote class="tiktok-embed" data-video-id="7554455761619930375" style="max-width: 100%;">
+                <blockquote class="tiktok-embed" data-video-id="7554455761619930375" style="max-width: 100%; margin:0;">
                     <section></section>
                 </blockquote>
                 <script async src="https://www.tiktok.com/embed.js"></script>
             </div>
 
-            <h1 class="glitch-title">مقدرش علي زعل الموطفه بتاعتي</h1>
+            <h1 class="glitch-text">مقدرش علي زعل الموطفه بتاعتي</h1>
             
-            <div class="message">
+            <div class="msg">
                 <span class="typewriter">يا ست البنات.. ضحكتك بتنور يومي.</span>
-                <p id="subText" style="opacity:0; transition: 1s;">الدنيا تزعل وإنتي لا.. صافي يا لبن؟ ❤️</p>
+                <p id="extra" style="opacity:0; margin-top:5px; transition:1s;">صافي يا لبن؟ ❤️</p>
             </div>
 
-            <button id="reconcileBtn" class="btn">صافي يا لبن؟ ❤️</button>
+            <button id="btn" class="btn">صافي يا لبن؟ ❤️</button>
         </div>
     </div>
 
     <script>
-        const card = document.getElementById('tiltCard');
-        const btn = document.getElementById('reconcileBtn');
+        const card = document.getElementById('card');
+        const btn = document.getElementById('btn');
         const photo = document.getElementById('photoContainer');
         const video = document.getElementById('videoArea');
-        const subText = document.getElementById('subText');
+        const extra = document.getElementById('extra');
 
-        // 1. حركة الـ 3D مع اللمس (للجوال)
+        // حركة 3D خفيفة جداً للموبايل
         document.addEventListener('touchmove', (e) => {
-            const touch = e.touches[0];
-            const x = (window.innerWidth / 2 - touch.pageX) / 10;
-            const y = (window.innerHeight / 2 - touch.pageY) / 10;
+            const x = (window.innerWidth / 2 - e.touches[0].pageX) / 15;
+            const y = (window.innerHeight / 2 - e.touches[0].pageY) / 15;
             card.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
-        }, { passive: true });
+        }, {passive: true});
 
-        // 2. ظهور النص الثاني بعد الكتابة
-        setTimeout(() => { subText.style.opacity = "1"; }, 3500);
+        setTimeout(() => extra.style.opacity = "1", 2800);
 
-        // 3. الضغط على الزرار (المفاجأة)
         btn.addEventListener('click', () => {
-            // تحويل شكل الزرار
-            btn.classList.add('clicked');
-            btn.innerText = "أحلى موظفة في الكون! 😍";
-
-            // تبديل الصورة بالفيديو
+            btn.style.display = 'none'; // نخفي الزرار عشان نوفر مساحة للفيديو
             photo.style.display = 'none';
             video.style.display = 'block';
 
-            // انفجار قلوب نيون
-            const duration = 5 * 1000;
-            const end = Date.now() + duration;
-
+            // انفجار قلوب
+            const end = Date.now() + 4000;
             (function frame() {
-                confetti({
-                    particleCount: 5,
-                    angle: 60,
-                    spread: 55,
-                    origin: { x: 0, y: 0.8 },
-                    colors: ['#ff2a6d', '#05d9e8', '#ffffff']
-                });
-                confetti({
-                    particleCount: 5,
-                    angle: 120,
-                    spread: 55,
-                    origin: { x: 1, y: 0.8 },
-                    colors: ['#ff2a6d', '#05d9e8', '#ffffff']
-                });
-
-                if (Date.now() < end) {
-                    requestAnimationFrame(frame);
-                }
+                confetti({ particleCount: 4, angle: 60, spread: 55, origin: { x: 0, y:0.7 }, colors: ['#ff2a6d', '#05d9e8'] });
+                confetti({ particleCount: 4, angle: 120, spread: 55, origin: { x: 1, y:0.7 }, colors: ['#ff2a6d', '#05d9e8'] });
+                if (Date.now() < end) requestAnimationFrame(frame);
             }());
         });
 
-        // 4. تأثير قلوب عند لمس أي مكان في الشاشة
         document.addEventListener('touchstart', (e) => {
-            const heart = document.createElement('div');
-            heart.innerHTML = '❤️';
-            heart.className = 'heart-tap';
-            heart.style.left = e.touches[0].clientX + 'px';
-            heart.style.top = e.touches[0].clientY + 'px';
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 2000);
+            const h = document.createElement('div');
+            h.innerHTML = '❤️'; h.className = 'heart';
+            h.style.left = e.touches[0].clientX + 'px';
+            h.style.top = e.touches[0].clientY + 'px';
+            document.body.appendChild(h);
+            setTimeout(() => h.remove(), 1500);
         });
     </script>
-</body>
-</html>
+
+    </body>
+    </html>
