@@ -1,165 +1,215 @@
-    <!DOCTYPE html>
-    <html lang="ar" dir="rtl">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-        <title>أنا أسف ❤️</title>
-        <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-        <style>
-            :root {
-                --primary: #ff2a6d;
-                --secondary: #05d9e8;
-                --dark: #01012b;
-            }
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>أنا أسف يا ست البنات ❤️</title>
+    
+    <!-- مكتبة زينة الاحتفال -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 
-            * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    <style>
+        :root {
+            --primary: #ff2a6d;
+            --secondary: #05d9e8;
+            --dark: #01012b;
+        }
 
-            body {
-                width: 100%; height: 100vh;
-                background: var(--dark);
-                font-family: 'Segoe UI', sans-serif;
-                overflow: hidden;
-                display: flex; justify-content: center; align-items: center;
-            }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
-            /* خلفية خفيفة عشان متحملش عالموبايل */
-            .bg {
-                position: fixed; width: 100%; height: 100%;
-                background: radial-gradient(circle at center, #1a1a4a 0%, #01012b 100%);
-                z-index: -1;
-            }
+        body {
+            width: 100%; height: 100vh;
+            background: var(--dark);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            display: flex; justify-content: center; align-items: center;
+        }
 
-            .container { width: 92%; max-width: 360px; perspective: 1500px; }
+        /* خلفية نيون متحركة خفيفة */
+        .bg {
+            position: fixed; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, #1a1a4a 0%, #01012b 100%);
+            z-index: -1;
+        }
 
-            .card {
-                background: rgba(255, 255, 255, 0.08);
-                backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-                border-radius: 25px; border: 1px solid rgba(255, 255, 255, 0.1);
-                padding: 20px 15px; text-align: center;
-                box-shadow: 0 20px 40px rgba(0,0,0,0.4);
-                transform-style: preserve-3d; transition: transform 0.1s;
-            }
+        .container { width: 95%; max-width: 350px; perspective: 1000px; }
 
-            /* الصورة: صغرنا الحجم عشان يناسب الموبايل */
-            .photo-area {
-                width: 110px; height: 110px; margin: 0 auto 15px;
-                position: relative; transform-style: preserve-3d;
-            }
+        .card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+            border-radius: 25px; border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px 15px; text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            transform-style: preserve-3d; transition: all 0.5s ease;
+            display: flex; flex-direction: column; align-items: center;
+        }
 
-            .photo-area img {
-                width: 100%; height: 100%; border-radius: 50%;
-                object-fit: cover; border: 3px solid white;
-                box-shadow: 0 0 20px var(--secondary);
-                transform: translateZ(40px);
-                animation: float 3s ease-in-out infinite;
-            }
+        /* تنسيق الصورة الـ 3D */
+        .photo-area {
+            width: 100px; height: 100px; margin-bottom: 15px;
+            transform: translateZ(30px);
+        }
+        .photo-area img {
+            width: 100%; height: 100%; border-radius: 50%;
+            object-fit: cover; border: 3px solid white;
+            box-shadow: 0 0 15px var(--secondary);
+            animation: float 3s infinite ease-in-out;
+        }
 
-            /* منطقة الفيديو: هتفتح بمقاس الموبايل */
-            #videoArea {
-                display: none; width: 100%; border-radius: 15px;
-                overflow: hidden; border: 2px solid var(--secondary);
-                margin-bottom: 15px; animation: slideIn 0.5s ease-out;
-            }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
 
-            .glitch-text {
-                color: white; font-size: 1.3rem; font-weight: bold;
-                text-shadow: 2px 2px var(--primary); margin-bottom: 10px;
-            }
+        /* حاوية الفيديو - مضبوطة للموبايل */
+        #videoArea {
+            display: none; 
+            width: 100%; 
+            height: 300px; /* ارتفاع محدد عشان مياكلش الشاشة */
+            overflow: hidden; 
+            border-radius: 15px;
+            border: 2px solid var(--secondary);
+            margin-bottom: 10px;
+            position: relative;
+            animation: zoomIn 0.5s ease-out;
+        }
 
-            .msg { color: #ccc; font-size: 0.95rem; line-height: 1.4; margin-bottom: 20px; }
+        /* تصغير مشغل التيك توك عشان ميبقاش ضخم */
+        .tiktok-embed {
+            margin: 0 !important;
+            padding: 0 !important;
+            transform: scale(0.75); /* تصغير الفيديو */
+            transform-origin: top center;
+            position: absolute;
+            top: -45px; /* إخفاء الأجزاء الزائدة من مشغل تيك توك */
+            left: 0;
+            width: 100% !important;
+        }
 
-            .typewriter {
-                display: inline-block; overflow: hidden; white-space: nowrap;
-                border-right: 2px solid var(--secondary);
-                animation: typing 2.5s steps(25) forwards;
-            }
+        .glitch-text {
+            color: white; font-size: 1.3rem; font-weight: bold;
+            text-shadow: 2px 2px var(--primary); margin-bottom: 10px;
+            transform: translateZ(20px);
+        }
 
-            .btn {
-                background: transparent; border: 2px solid var(--secondary);
-                color: var(--secondary); padding: 12px 30px; border-radius: 50px;
-                font-size: 1rem; font-weight: bold; transition: 0.3s;
-                box-shadow: 0 0 10px var(--secondary);
-            }
+        .msg-box { color: #ccc; font-size: 0.95rem; line-height: 1.4; margin-bottom: 15px; }
 
-            .btn:active { background: var(--secondary); color: black; transform: scale(0.9); }
+        /* الكلام الحلو اللي هيظهر في الآخر */
+        .extra-speech {
+            display: none;
+            color: #fff; font-size: 0.9rem; line-height: 1.6;
+            animation: fadeIn 1.5s ease forwards;
+        }
+        .extra-speech p { margin-bottom: 5px; }
+        .final-word {
+            color: var(--secondary); font-weight: bold; font-size: 1rem;
+            text-shadow: 0 0 10px var(--secondary); margin-top: 10px;
+        }
 
-            @keyframes float { 0%, 100% { transform: translateZ(40px) translateY(0); } 50% { transform: translateZ(50px) translateY(-10px); } }
-            @keyframes typing { from { width: 0; } to { width: 100%; } }
-            @keyframes slideIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-            .heart { position: absolute; font-size: 20px; pointer-events: none; animation: fly 1.5s ease-out forwards; }
-            @keyframes fly { to { transform: translateY(-100px); opacity: 0; } }
-        </style>
-    </head>
-    <body>
+        .btn {
+            background: transparent; border: 2px solid var(--secondary);
+            color: var(--secondary); padding: 12px 30px; border-radius: 50px;
+            font-size: 1.1rem; font-weight: bold; cursor: pointer;
+            box-shadow: 0 0 10px var(--secondary); transition: 0.3s;
+        }
+        .btn:active { transform: scale(0.9); background: var(--secondary); color: #000; }
 
-    <div class="bg"></div>
+        .heart { position: absolute; font-size: 20px; pointer-events: none; animation: fly 1.5s ease-out forwards; }
+        @keyframes fly { to { transform: translateY(-100px) scale(0); opacity: 0; } }
+    </style>
+</head>
+<body>
 
-    <div class="container">
-        <div class="card" id="card">
-            <!-- الصورة -->
-            <div id="photoContainer" class="photo-area">
-                <img src="2a0a654f-a33d-4296-bd8a-9a2360f68a3a.jpg" alt="الموظفة">
-            </div>
+<div class="bg"></div>
 
-            <!-- الفيديو (بيظهر مكان الصورة) -->
-            <div id="videoArea">
-                <blockquote class="tiktok-embed" data-video-id="7554455761619930375" style="max-width: 100%; margin:0;">
-                    <section></section>
-                </blockquote>
-                <script async src="https://www.tiktok.com/embed.js"></script>
-            </div>
-
-            <h1 class="glitch-text">مقدرش علي زعل الموطفه بتاعتي</h1>
-            
-            <div class="msg">
-                <span class="typewriter">يا ست البنات.. ضحكتك بتنور يومي.</span>
-                <p id="extra" style="opacity:0; margin-top:5px; transition:1s;">صافي يا لبن؟ ❤️</p>
-            </div>
-
-            <button id="btn" class="btn">صافي يا لبن؟ ❤️</button>
+<div class="container">
+    <div class="card" id="card">
+        <!-- منطقة الصورة -->
+        <div id="photoArea" class="photo-area">
+            <img src="photo.jpg" alt="الموظفة الغالية">
         </div>
+
+        <!-- منطقة الفيديو -->
+        <div id="videoArea">
+            <blockquote class="tiktok-embed" data-video-id="7554455761619930375">
+                <section></section>
+            </blockquote>
+            <script async src="https://www.tiktok.com/embed.js"></script>
+        </div>
+
+        <h1 id="title" class="glitch-text">مقدرش علي زعل الموطفه بتاعتي</h1>
+        
+        <div id="msgBox" class="msg-box">
+            <p>يا ست البنات.. ضحكتك بتنور يومي.</p>
+            <p>الدنيا كلها تزعل إلا إنتي ❤️</p>
+        </div>
+
+        <!-- الكلام الرومانسي المخفي -->
+        <div id="extraSpeech" class="extra-speech">
+            <p>عارف إن قلبك أبيض ومبيشيلش..</p>
+            <p>وانتي عارفة إنك عندي بالدنيا وما فيها.</p>
+            <p>مقدرش أعدي يومي وانتي شايلة مني زرة زعل..</p>
+            <p class="final-word">بحبك يا أحلى موظفة في حياتي! ❤️</p>
+        </div>
+
+        <button id="reconcileBtn" class="btn">صافي يا لبن؟ ❤️</button>
     </div>
+</div>
 
-    <script>
-        const card = document.getElementById('card');
-        const btn = document.getElementById('btn');
-        const photo = document.getElementById('photoContainer');
-        const video = document.getElementById('videoArea');
-        const extra = document.getElementById('extra');
+<script>
+    const btn = document.getElementById('reconcileBtn');
+    const photo = document.getElementById('photoArea');
+    const video = document.getElementById('videoArea');
+    const title = document.getElementById('title');
+    const msgBox = document.getElementById('msgBox');
+    const extraSpeech = document.getElementById('extraSpeech');
+    const card = document.getElementById('card');
 
-        // حركة 3D خفيفة جداً للموبايل
-        document.addEventListener('touchmove', (e) => {
-            const x = (window.innerWidth / 2 - e.touches[0].pageX) / 15;
-            const y = (window.innerHeight / 2 - e.touches[0].pageY) / 15;
-            card.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
-        }, {passive: true});
+    // 1. حركة الكارت مع اللمس (3D Parallax)
+    document.addEventListener('touchmove', (e) => {
+        const x = (window.innerWidth / 2 - e.touches[0].pageX) / 15;
+        const y = (window.innerHeight / 2 - e.touches[0].pageY) / 15;
+        card.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
+    }, {passive: true});
 
-        setTimeout(() => extra.style.opacity = "1", 2800);
+    // 2. المفاجأة عند الضغط
+    btn.addEventListener('click', () => {
+        // إخفاء العناصر القديمة لتوفير مساحة
+        photo.style.display = 'none';
+        msgBox.style.display = 'none';
+        btn.style.display = 'none';
+        
+        // تغيير العنوان وإظهار الفيديو والكلام الحلو
+        title.innerText = "أيوة كدة يا قمر! 😍";
+        title.style.fontSize = "1rem";
+        
+        video.style.display = 'block';
+        
+        setTimeout(() => {
+            extraSpeech.style.display = 'block';
+        }, 1000);
 
-        btn.addEventListener('click', () => {
-            btn.style.display = 'none'; // نخفي الزرار عشان نوفر مساحة للفيديو
-            photo.style.display = 'none';
-            video.style.display = 'block';
+        // انفجار القلوب (Confetti)
+        const end = Date.now() + 4000;
+        (function frame() {
+            confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0, y:0.8 }, colors: ['#ff2a6d', '#05d9e8'] });
+            confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1, y:0.8 }, colors: ['#ff2a6d', '#05d9e8'] });
+            if (Date.now() < end) requestAnimationFrame(frame);
+        }());
+    });
 
-            // انفجار قلوب
-            const end = Date.now() + 4000;
-            (function frame() {
-                confetti({ particleCount: 4, angle: 60, spread: 55, origin: { x: 0, y:0.7 }, colors: ['#ff2a6d', '#05d9e8'] });
-                confetti({ particleCount: 4, angle: 120, spread: 55, origin: { x: 1, y:0.7 }, colors: ['#ff2a6d', '#05d9e8'] });
-                if (Date.now() < end) requestAnimationFrame(frame);
-            }());
-        });
+    // 3. تأثير قلوب عند لمس الشاشة
+    document.addEventListener('touchstart', (e) => {
+        const h = document.createElement('div');
+        h.innerHTML = '❤️'; h.className = 'heart';
+        h.style.left = e.touches[0].clientX + 'px';
+        h.style.top = e.touches[0].clientY + 'px';
+        document.body.appendChild(h);
+        setTimeout(() => h.remove(), 1500);
+    });
+</script>
 
-        document.addEventListener('touchstart', (e) => {
-            const h = document.createElement('div');
-            h.innerHTML = '❤️'; h.className = 'heart';
-            h.style.left = e.touches[0].clientX + 'px';
-            h.style.top = e.touches[0].clientY + 'px';
-            document.body.appendChild(h);
-            setTimeout(() => h.remove(), 1500);
-        });
-    </script>
-
-    </body>
-    </html>
+</body>
+</html>
