@@ -13,6 +13,9 @@
             --primary: #ff2a6d;
             --secondary: #05d9e8;
             --dark: #01012b;
+            /* ألوان اللوجو الجديد */
+            --logo-start: #8195ff; 
+            --logo-end: #33ccff;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
@@ -38,10 +41,25 @@
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             border-radius: 25px; border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 20px 15px; text-align: center;
+            padding: 25px 15px; text-align: center;
             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
             transform-style: preserve-3d; transition: all 0.5s ease;
             display: flex; flex-direction: column; align-items: center;
+        }
+
+        /* تنسيق اللوجو ELSHAMAA */
+        .logo-text {
+            font-family: 'Arial Black', Gadget, sans-serif;
+            font-weight: 900;
+            font-size: 1.8rem;
+            letter-spacing: -1px;
+            background: linear-gradient(90deg, var(--logo-start) 0%, var(--logo-end) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            transform: translateZ(40px);
+            filter: drop-shadow(0 0 5px rgba(51, 204, 255, 0.3));
         }
 
         /* تنسيق الصورة الـ 3D */
@@ -61,11 +79,11 @@
             50% { transform: translateY(-10px); }
         }
 
-        /* حاوية الفيديو - مضبوطة للموبايل */
+        /* حاوية الفيديو */
         #videoArea {
             display: none; 
             width: 100%; 
-            height: 300px; /* ارتفاع محدد عشان مياكلش الشاشة */
+            height: 300px; 
             overflow: hidden; 
             border-radius: 15px;
             border: 2px solid var(--secondary);
@@ -74,14 +92,13 @@
             animation: zoomIn 0.5s ease-out;
         }
 
-        /* تصغير مشغل التيك توك عشان ميبقاش ضخم */
         .tiktok-embed {
             margin: 0 !important;
             padding: 0 !important;
-            transform: scale(0.75); /* تصغير الفيديو */
+            transform: scale(0.75);
             transform-origin: top center;
             position: absolute;
-            top: -45px; /* إخفاء الأجزاء الزائدة من مشغل تيك توك */
+            top: -45px;
             left: 0;
             width: 100% !important;
         }
@@ -94,7 +111,6 @@
 
         .msg-box { color: #ccc; font-size: 0.95rem; line-height: 1.4; margin-bottom: 15px; }
 
-        /* الكلام الحلو اللي هيظهر في الآخر */
         .extra-speech {
             display: none;
             color: #fff; font-size: 0.9rem; line-height: 1.6;
@@ -113,6 +129,7 @@
             color: var(--secondary); padding: 12px 30px; border-radius: 50px;
             font-size: 1.1rem; font-weight: bold; cursor: pointer;
             box-shadow: 0 0 10px var(--secondary); transition: 0.3s;
+            transform: translateZ(50px);
         }
         .btn:active { transform: scale(0.9); background: var(--secondary); color: #000; }
 
@@ -126,6 +143,9 @@
 
 <div class="container">
     <div class="card" id="card">
+        <!-- إضافة اللوجو هنا -->
+        <div class="logo-text">ELSHAMAA</div>
+
         <!-- منطقة الصورة -->
         <div id="photoArea" class="photo-area">
             <img src="2a0a654f-a33d-4296-bd8a-9a2360f68a3a.jpg" alt="الموظفة الغالية">
@@ -139,7 +159,7 @@
             <script async src="https://www.tiktok.com/embed.js"></script>
         </div>
 
-        <h1 id="title" class="glitch-text">مقدرش علي زعل الموطفه بتاعتي</h1>
+        <h1 id="title" class="glitch-text">مقدرش علي زعل الموظفة بتاعتي</h1>
         
         <div id="msgBox" class="msg-box">
             <p>يا ست البنات.. ضحكتك بتنور يومي.</p>
@@ -150,7 +170,7 @@
         <div id="extraSpeech" class="extra-speech">
             <p>عارف إن قلبك أبيض ومبيشيلش..</p>
             <p>وانتي عارفة إنك عندي بالدنيا وما فيها.</p>
-            <p>مقدرش أعدي يومي وانتي شايلة مني زرة زعل..</p>
+            <p>مقدرش أعدي يومي وانتي شايلة مني ذرة زعل..</p>
             <p class="final-word">بحبك يا أحلى موظفة في حياتي! ❤️</p>
         </div>
 
@@ -167,29 +187,32 @@
     const extraSpeech = document.getElementById('extraSpeech');
     const card = document.getElementById('card');
 
-    // 1. حركة الكارت مع اللمس (3D Parallax)
-    document.addEventListener('touchmove', (e) => {
-        const x = (window.innerWidth / 2 - e.touches[0].pageX) / 15;
-        const y = (window.innerHeight / 2 - e.touches[0].pageY) / 15;
+    // 1. حركة الكارت مع اللمس (3D Parallax) للموبايل والماوس
+    function handleMove(e) {
+        const xVal = e.touches ? e.touches[0].pageX : e.pageX;
+        const yVal = e.touches ? e.touches[0].pageY : e.pageY;
+        const x = (window.innerWidth / 2 - xVal) / 15;
+        const y = (window.innerHeight / 2 - yVal) / 15;
         card.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
-    }, {passive: true});
+    }
+
+    document.addEventListener('touchmove', handleMove, {passive: true});
+    document.addEventListener('mousemove', handleMove);
 
     // 2. المفاجأة عند الضغط
     btn.addEventListener('click', () => {
-        // إخفاء العناصر القديمة لتوفير مساحة
         photo.style.display = 'none';
         msgBox.style.display = 'none';
         btn.style.display = 'none';
         
-        // تغيير العنوان وإظهار الفيديو والكلام الحلو
         title.innerText = "أيوة كدة يا قمر! 😍";
-        title.style.fontSize = "1rem";
+        title.style.fontSize = "1.1rem";
         
         video.style.display = 'block';
         
         setTimeout(() => {
             extraSpeech.style.display = 'block';
-        }, 1000);
+        }, 800);
 
         // انفجار القلوب (Confetti)
         const end = Date.now() + 4000;
@@ -200,7 +223,7 @@
         }());
     });
 
-    // 3. تأثير قلوب عند لمس الشاشة
+    // 3. تأثير قلوب عند اللمس
     document.addEventListener('touchstart', (e) => {
         const h = document.createElement('div');
         h.innerHTML = '❤️'; h.className = 'heart';
